@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using SokobanPC.ScreenManager;
 
 namespace SokobanPC
 {
@@ -15,37 +16,36 @@ namespace SokobanPC
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferWidth = 960;
+            graphics.PreferredBackBufferHeight = 544;
+            graphics.ApplyChanges();
             Content.RootDirectory = "Content";
         }
 
         /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
+
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            SCREEN_MANAGER.add_screen(new LevelScreen(GraphicsDevice, Content));
+
+            SCREEN_MANAGER.goto_screen("level");
 
             base.Initialize();
         }
 
         /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
+
         /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            SCREEN_MANAGER.Init();
 
-            // TODO: use this.Content to load your game content here
         }
 
         /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// game-specific content.
+
         /// </summary>
         protected override void UnloadContent()
         {
@@ -53,8 +53,6 @@ namespace SokobanPC
         }
 
         /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
@@ -62,7 +60,7 @@ namespace SokobanPC
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            SCREEN_MANAGER.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -75,7 +73,7 @@ namespace SokobanPC
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            SCREEN_MANAGER.Draw(gameTime);
 
             base.Draw(gameTime);
         }
