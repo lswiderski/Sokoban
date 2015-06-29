@@ -21,12 +21,15 @@ namespace SokobanPC
 #   ####
 #####";
         private Texture2D textures;
+        private Player player;
 
-        public Level(Texture2D textures)
+        public Level(Texture2D textures, Player _player)
         {
             newEmptyLevel(1, 1);
+            player = _player;
             parseLevel(exampleLevel);
             this.textures = textures;
+            
         }
 
         public void newEmptyLevel(int sizeX, int sizeY)
@@ -59,7 +62,7 @@ namespace SokobanPC
                                     isWallInLineAlready = true;
                                     break;
                                 case '@': Map[rowIndex, i] = new Block(BLOCK_TYPE.Floor);
-                                    //Player
+                                    player.Position = new Vector2(rowIndex, i);
                                     break;
                                 case '+': Map[rowIndex, i] = new Block(BLOCK_TYPE.Goal);
                                     // player on goal
