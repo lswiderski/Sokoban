@@ -72,7 +72,7 @@ namespace SokobanPC
                                     break;
                                 case '.': Map[rowIndex, i] = new Block(BLOCK_TYPE.Goal);
                                     break;
-                                case ' ': Map[rowIndex, i] = isWallInLineAlready ? new Block(BLOCK_TYPE.Floor) : new Block(BLOCK_TYPE.Empty);
+                                case ' ': Map[rowIndex, i] =  new Block( isWallInLineAlready ? BLOCK_TYPE.Floor : BLOCK_TYPE.Empty);
                                     break;
                             }
                         }
