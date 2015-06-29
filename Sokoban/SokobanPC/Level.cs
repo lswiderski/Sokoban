@@ -62,7 +62,7 @@ namespace SokobanPC
                                     isWallInLineAlready = true;
                                     break;
                                 case '@': Map[rowIndex, i] = new Block(BLOCK_TYPE.Floor);
-                                    player.Position = new Vector2(rowIndex, i);
+                                    player.Position = new Vector2( i, rowIndex);
                                     break;
                                 case '+': Map[rowIndex, i] = new Block(BLOCK_TYPE.Goal);
                                     // player on goal
@@ -93,11 +93,24 @@ namespace SokobanPC
 
         public BLOCK_TYPE getType(int indexX, int indexY)
         {
-            return Map[indexX, indexY].BlockType;
+            return Map[indexY, indexX].BlockType;
         }
         public bool isEmpty(int indexX, int indexY)
         {
-            return Map[indexX, indexY].IsEmpty;
+            return Map[indexY, indexX].IsEmpty;
+        }
+        public bool isEmpty(Vector2 position)
+        {
+            return Map[(int)position.Y, (int)position.X].IsEmpty;
+        }
+
+        public bool isWall(int indexX, int indexY)
+        {
+            return Map [indexY, indexX].BlockType == BLOCK_TYPE.Wall;
+        }
+        public bool isWall(Vector2 position)
+        {
+            return Map[(int)position.Y, (int)position.X].BlockType == BLOCK_TYPE.Wall;
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
