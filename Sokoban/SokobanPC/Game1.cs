@@ -41,6 +41,7 @@ namespace SokobanPC
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             SCREEN_MANAGER.Init();
+            
 
         }
 
@@ -49,7 +50,7 @@ namespace SokobanPC
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
+            
         }
 
         /// <summary>
