@@ -61,17 +61,19 @@ namespace SokobanPC
                                 case '#': Map[rowIndex, i] = new Block(BLOCK_TYPE.Wall);
                                     isWallInLineAlready = true;
                                     break;
+                                    //player
                                 case '@': Map[rowIndex, i] = new Block(BLOCK_TYPE.Floor);
                                     player.Position = new Vector2( i, rowIndex);
                                     break;
+                                // player on goal
                                 case '+': Map[rowIndex, i] = new Block(BLOCK_TYPE.Goal);
-                                    // player on goal
+                                    player.Position = new Vector2(i, rowIndex);
                                     break;
-                                case '$': Map[rowIndex, i] = new Block(BLOCK_TYPE.Floor);
-                                    //Box
+                                //Box
+                                case '$': Map[rowIndex, i] = new Block(BLOCK_TYPE.Floor);    
                                     break;
-                                case '*': Map[rowIndex, i] = new Block(BLOCK_TYPE.Goal);
-                                    //Box on goal
+                                //Box on goal
+                                case '*': Map[rowIndex, i] = new Block(BLOCK_TYPE.Goal);         
                                     break;
                                 case '.': Map[rowIndex, i] = new Block(BLOCK_TYPE.Goal);
                                     break;
