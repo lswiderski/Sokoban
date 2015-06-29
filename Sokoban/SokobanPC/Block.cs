@@ -30,6 +30,27 @@ namespace SokobanPC
             BlockType = (BLOCK_TYPE) blockType;
             IsEmpty = true;
         }
+
+        public void Draw(SpriteBatch spriteBatch, Texture2D texture, Vector2 position)
+        {
+            switch (BlockType)
+            {
+                case BLOCK_TYPE.Floor:
+                    spriteBatch.Draw(texture, new Vector2(position.Y * (texture.Height), position.X * (texture.Height)), new Rectangle(5 * (texture.Height), 0, texture.Height, texture.Height), Color.White);
+                    break;
+                case BLOCK_TYPE.Wall:
+                    spriteBatch.Draw(texture, new Vector2(position.Y * (texture.Height), position.X * (texture.Height)), new Rectangle(1 * (texture.Height), 0, texture.Height, texture.Height), Color.White);
+                    break;
+                case BLOCK_TYPE.Goal:
+                    spriteBatch.Draw(texture, new Vector2(position.Y * (texture.Height), position.X * (texture.Height)), new Rectangle(3 * (texture.Height), 0, texture.Height, texture.Height), Color.White);
+                    break;
+                case BLOCK_TYPE.Empty:
+                    spriteBatch.Draw(texture, new Vector2(position.Y * (texture.Height), position.X * (texture.Height)), new Rectangle(6 * (texture.Height), 0, texture.Height, texture.Height), Color.White);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
     }
     
 }

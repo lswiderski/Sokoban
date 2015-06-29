@@ -106,22 +106,7 @@ namespace SokobanPC
             {
                 for (int j = 0; j < Map.GetLength(1); j++)
                 {
-                    switch (Map[i, j].BlockType)
-                    {
-                        case BLOCK_TYPE.Wall:
-                            spriteBatch.Draw(textures, new Vector2(j * (textures.Height), i * (textures.Height)), new Rectangle(1 * (textures.Height), 0, textures.Height, textures.Height), Color.White);
-                            break;
-                        case BLOCK_TYPE.Floor:
-                            spriteBatch.Draw(textures, new Vector2(j * (textures.Height), i * (textures.Height)), new Rectangle(5 * (textures.Height), 0, textures.Height, textures.Height), Color.White);
-                            break;
-                        case BLOCK_TYPE.Goal:
-                            spriteBatch.Draw(textures, new Vector2(j * (textures.Height), i * (textures.Height)), new Rectangle(3 * (textures.Height), 0, textures.Height, textures.Height), Color.White);
-                            break;
-                        case BLOCK_TYPE.Empty:
-                            spriteBatch.Draw(textures, new Vector2(j * (textures.Height), i * (textures.Height)), new Rectangle(6 * (textures.Height), 0, textures.Height, textures.Height), Color.White);
-                            break;
-                    }
-
+                    Map[i, j].Draw(spriteBatch, textures, new Vector2(i,j));
                 }
             }
         }
