@@ -12,6 +12,7 @@ namespace SokobanPC
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        
 
         public Game1()
         {
@@ -41,7 +42,7 @@ namespace SokobanPC
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             SCREEN_MANAGER.Init();
-            
+             
 
         }
 

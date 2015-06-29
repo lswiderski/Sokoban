@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace SokobanPC
 {
@@ -18,11 +20,13 @@ namespace SokobanPC
 # $    #
 #   ####
 #####";
+        private Texture2D textures;
 
-        public Level()
+        public Level(Texture2D textures)
         {
             newEmptyLevel(1, 1);
             parseLevel(exampleLevel);
+            this.textures = textures;
         }
 
         public void newEmptyLevel(int sizeX, int sizeY)
@@ -42,28 +46,37 @@ namespace SokobanPC
                 while ((line = reader.ReadLine()) != null)
                 {
                     Console.WriteLine(line);
-                    for (int i = 0; i < line.Length; i++)
+                    for (int i = 0; i < charsInRow; i++)
                     {
-                        switch (line[i])
+                        if (i < line.Length)
                         {
-                            case '#': Map[rowIndex, i] = new Block(BLOCK_TYPE.Wall);
-                                break;
-                            case '@': Map[rowIndex, i] = new Block(BLOCK_TYPE.Floor);
-                                //Player
-                                break;
-                            case '+': Map[rowIndex, i] = new Block(BLOCK_TYPE.Goal);
-                                // player on goal
-                                break;
-                            case '$': Map[rowIndex, i] = new Block(BLOCK_TYPE.Floor);
-                                //Box
-                                break;
-                            case '*': Map[rowIndex, i] = new Block(BLOCK_TYPE.Goal);
-                                //Box on goal
-                                break;
-                            case '.': Map[rowIndex, i] = new Block(BLOCK_TYPE.Goal);
-                                break;
-                            case ' ': Map[rowIndex, i] = new Block(BLOCK_TYPE.Floor);
-                                break;
+                            switch (line[i])
+                            {
+                                case '#': Map[rowIndex, i] = new Block(BLOCK_TYPE.Wall);
+                                    break;
+                                case '@': Map[rowIndex, i] = new Block(BLOCK_TYPE.Floor);
+                                    //Player
+                                    break;
+                                case '+': Map[rowIndex, i] = new Block(BLOCK_TYPE.Goal);
+                                    // player on goal
+                                    break;
+                                case '$': Map[rowIndex, i] = new Block(BLOCK_TYPE.Floor);
+                                    //Box
+                                    break;
+                                case '*': Map[rowIndex, i] = new Block(BLOCK_TYPE.Goal);
+                                    //Box on goal
+                                    break;
+                                case '.': Map[rowIndex, i] = new Block(BLOCK_TYPE.Goal);
+                                    break;
+                                case ' ': Map[rowIndex, i] = new Block(BLOCK_TYPE.Floor);
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            Map[rowIndex, i] = new Block(BLOCK_TYPE.Floor);
+
+                            //TODO: Empty block
                         }
                     }
                     rowIndex++;
@@ -78,6 +91,29 @@ namespace SokobanPC
         public bool isEmpty(int indexX, int indexY)
         {
             return Map[indexX, indexY].IsEmpty;
+        }
+
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            for (int i = 0; i < Map.GetLength(0); i++)
+            {
+                for (int j = 0; j < Map.GetLength(1); j++)
+                {
+                    switch (Map[i, j].BlockType)
+                    {
+                        case BLOCK_TYPE.Wall:
+                            spriteBatch.Draw(textures, new Vector2(j * (textures.Height), i * (textures.Height)), new Rectangle(1 * (textures.Height), 0, textures.Height, textures.Height), Color.White);
+                            break;
+                        case BLOCK_TYPE.Floor:
+                            spriteBatch.Draw(textures, new Vector2(j * (textures.Height), i * (textures.Height)), new Rectangle(5 * (textures.Height), 0, textures.Height, textures.Height), Color.White);
+                            break;
+                        case BLOCK_TYPE.Goal:
+                            spriteBatch.Draw(textures, new Vector2(j * (textures.Height), i * (textures.Height)), new Rectangle(3 * (textures.Height), 0, textures.Height, textures.Height), Color.White);
+                            break;
+                    }
+
+                }
+            }
         }
     }
 }

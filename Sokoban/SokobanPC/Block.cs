@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace SokobanPC
 {
+    public enum BLOCK_TYPE { Floor = ' ', Wall = '#', Goal = '.' }
     class Block
     {
         public bool IsEmpty { get; set; }
@@ -28,5 +31,5 @@ namespace SokobanPC
             IsEmpty = true;
         }
     }
-    public enum BLOCK_TYPE { Floor = ' ', Wall = '#', Goal = '.'}
+    
 }

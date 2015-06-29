@@ -11,10 +11,13 @@ namespace SokobanPC
 {
     public class LevelScreen : Screen
     {
+        private Texture2D text;
+        private Level level;
         public LevelScreen(GraphicsDevice device, ContentManager content)
             : base(device, content, "level")
         {
-            
+            text = content.Load<Texture2D>("sb_texture");
+            level = new Level(text);
         }
 
         public override void Update(GameTime gameTime)
@@ -26,6 +29,7 @@ namespace SokobanPC
         {
             base.Draw(gameTime);
             spriteBatch.Begin();
+            level.Draw(gameTime,spriteBatch);
             spriteBatch.End();
         }
 
