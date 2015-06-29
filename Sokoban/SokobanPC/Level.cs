@@ -45,14 +45,18 @@ namespace SokobanPC
                 int rowIndex = 0;
                 while ((line = reader.ReadLine()) != null)
                 {
-                    Console.WriteLine(line);
+
+                    bool isWallInLineAlready = false;
                     for (int i = 0; i < charsInRow; i++)
                     {
+
+                       
                         if (i < line.Length)
                         {
                             switch (line[i])
                             {
                                 case '#': Map[rowIndex, i] = new Block(BLOCK_TYPE.Wall);
+                                    isWallInLineAlready = true;
                                     break;
                                 case '@': Map[rowIndex, i] = new Block(BLOCK_TYPE.Floor);
                                     //Player
@@ -68,13 +72,13 @@ namespace SokobanPC
                                     break;
                                 case '.': Map[rowIndex, i] = new Block(BLOCK_TYPE.Goal);
                                     break;
-                                case ' ': Map[rowIndex, i] = new Block(BLOCK_TYPE.Floor);
+                                case ' ': Map[rowIndex, i] = isWallInLineAlready ? new Block(BLOCK_TYPE.Floor) : new Block(BLOCK_TYPE.Empty);
                                     break;
                             }
                         }
                         else
                         {
-                            Map[rowIndex, i] = new Block(BLOCK_TYPE.Floor);
+                            Map[rowIndex, i] = new Block(BLOCK_TYPE.Empty);
 
                             //TODO: Empty block
                         }
@@ -109,6 +113,9 @@ namespace SokobanPC
                             break;
                         case BLOCK_TYPE.Goal:
                             spriteBatch.Draw(textures, new Vector2(j * (textures.Height), i * (textures.Height)), new Rectangle(3 * (textures.Height), 0, textures.Height, textures.Height), Color.White);
+                            break;
+                        case BLOCK_TYPE.Empty:
+                            spriteBatch.Draw(textures, new Vector2(j * (textures.Height), i * (textures.Height)), new Rectangle(6 * (textures.Height), 0, textures.Height, textures.Height), Color.White);
                             break;
                     }
 

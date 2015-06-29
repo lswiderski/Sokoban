@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace SokobanPC
 {
-    public enum BLOCK_TYPE { Floor = ' ', Wall = '#', Goal = '.' }
+    public enum BLOCK_TYPE { Floor = 1, Wall , Goal, Empty }
     class Block
     {
         public bool IsEmpty { get; set; }
