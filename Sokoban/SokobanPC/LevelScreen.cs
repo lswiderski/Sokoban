@@ -15,6 +15,7 @@ namespace SokobanPC
         private Texture2D text;
         private Level level;
         private Player player;
+        private List<Box> boxes;
 
         private KeyboardState oldKeyboardState;
         private KeyboardState newKeyboardState;
@@ -23,8 +24,9 @@ namespace SokobanPC
             : base(device, content, "level")
         {
             text = content.Load<Texture2D>("sb_texture");
+            boxes = new List<Box>();
             player = new Player(text);
-            level = new Level(text,player);
+            level = new Level(text,player, ref boxes);
             oldKeyboardState = Keyboard.GetState();
         }
 
@@ -39,7 +41,7 @@ namespace SokobanPC
             else if (!level.isEmpty(player.Position))
             {
                 //box on place
-                Vector2 NextToBox = new Vector2(player.Position.X,player.Position.Y) + player.MoveVector;
+                Vector2 NextToBox = player.Position + player.MoveVector;
 
                 if (!level.isEmpty(NextToBox) || level.isWall(NextToBox))
                 {
@@ -48,8 +50,20 @@ namespace SokobanPC
                 else
                 {
                     //new box place
-                    // Box.position  = NextToBox
+                    foreach (Box box in boxes)
+                    {
+                        if(box.Position ==player.Position)
+                        box.Position = NextToBox;
+                        level.SetEmpty(NextToBox, false);
+                        level.SetEmpty(player.Position);
+                    }
                 }
+
+            }
+            foreach (Box box in boxes)
+            {
+                // ReSharper disable once NegativeEqualityExpression
+                box.IsActive = level.getType(box.Position) == BLOCK_TYPE.Goal ? true : false;
 
             }
 
@@ -85,6 +99,10 @@ namespace SokobanPC
             spriteBatch.Begin();
             level.Draw(gameTime,spriteBatch);
             player.Draw(gameTime,spriteBatch);
+            foreach (Box box in boxes)
+            {
+                box.Draw(gameTime,spriteBatch,text);
+            }
             spriteBatch.End();
         }
 

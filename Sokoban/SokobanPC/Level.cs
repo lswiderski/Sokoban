@@ -22,14 +22,17 @@ namespace SokobanPC
 #####";
         private Texture2D textures;
         private Player player;
+        private List<Box> boxes; 
 
-        public Level(Texture2D textures, Player _player)
+        public Level(Texture2D textures, Player _player, ref List<Box> _boxes )
         {
             newEmptyLevel(1, 1);
             player = _player;
+            boxes = _boxes;
             parseLevel(exampleLevel);
             this.textures = textures;
             
+
         }
 
         public void newEmptyLevel(int sizeX, int sizeY)
@@ -70,10 +73,12 @@ namespace SokobanPC
                                     player.Position = new Vector2(i, rowIndex);
                                     break;
                                 //Box
-                                case '$': Map[rowIndex, i] = new Block(BLOCK_TYPE.Floor);    
+                                case '$': Map[rowIndex, i] = new Block(BLOCK_TYPE.Floor){IsEmpty = false};
+                                    boxes.Add(new Box(new Vector2(i, rowIndex)));
                                     break;
                                 //Box on goal
-                                case '*': Map[rowIndex, i] = new Block(BLOCK_TYPE.Goal);         
+                                case '*': Map[rowIndex, i] = new Block(BLOCK_TYPE.Goal) { IsEmpty = false };
+                                    boxes.Add(new Box(new Vector2(i, rowIndex)));
                                     break;
                                 case '.': Map[rowIndex, i] = new Block(BLOCK_TYPE.Goal);
                                     break;
@@ -84,8 +89,6 @@ namespace SokobanPC
                         else
                         {
                             Map[rowIndex, i] = new Block(BLOCK_TYPE.Empty);
-
-                            //TODO: Empty block
                         }
                     }
                     rowIndex++;
@@ -97,9 +100,17 @@ namespace SokobanPC
         {
             return Map[indexY, indexX].BlockType;
         }
+        public BLOCK_TYPE getType(Vector2 position)
+        {
+            return Map[(int)position.Y, (int)position.X].BlockType;
+        }
         public bool isEmpty(int indexX, int indexY)
         {
             return Map[indexY, indexX].IsEmpty;
+        }
+        public void SetEmpty(Vector2 position, bool empty = true)
+        {
+            Map[(int)position.Y, (int)position.X].IsEmpty = empty;
         }
         public bool isEmpty(Vector2 position)
         {
@@ -122,6 +133,10 @@ namespace SokobanPC
                 for (int j = 0; j < Map.GetLength(1); j++)
                 {
                     Map[i, j].Draw(spriteBatch, textures, new Vector2(i,j));
+                    //if (!Map[i, j].IsEmpty)
+                    //{
+                    //    spriteBatch.Draw(textures, new Vector2(j* (textures.Height), i * (textures.Height)), new Rectangle(1 * (textures.Height), 0, textures.Height, textures.Height), Color.White);
+                    //}
                 }
             }
         }

@@ -39,7 +39,7 @@ namespace SokobanPC
                     spriteBatch.Draw(texture, new Vector2(position.Y * (texture.Height), position.X * (texture.Height)), new Rectangle(5 * (texture.Height), 0, texture.Height, texture.Height), Color.White);
                     break;
                 case BLOCK_TYPE.Wall:
-                    spriteBatch.Draw(texture, new Vector2(position.Y * (texture.Height), position.X * (texture.Height)), new Rectangle(1 * (texture.Height), 0, texture.Height, texture.Height), Color.White);
+                    spriteBatch.Draw(texture, new Vector2(position.Y * (texture.Height), position.X * (texture.Height)), new Rectangle(4 * (texture.Height), 0, texture.Height, texture.Height), Color.White);
                     break;
                 case BLOCK_TYPE.Goal:
                     spriteBatch.Draw(texture, new Vector2(position.Y * (texture.Height), position.X * (texture.Height)), new Rectangle(3 * (texture.Height), 0, texture.Height, texture.Height), Color.White);
