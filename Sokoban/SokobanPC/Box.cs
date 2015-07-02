@@ -12,10 +12,12 @@ namespace SokobanPC
         public Vector2 MoveVector = Vector2.Zero;
         public Vector2 Position { get; set; }
         public bool IsActive { get; set; }
-
+        public int ID { get; set; }
+        private static int Global_ID = 0;
         public Box(Vector2 position)
         {
             Position = position;
+            ID = Global_ID++;
         }
 
         public void moveUp()
