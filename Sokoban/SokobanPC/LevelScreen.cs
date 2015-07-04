@@ -15,6 +15,7 @@ namespace SokobanPC
         private Texture2D text;
         private Level level;
         private Player player;
+        private AIPlayer aiplayer;
         private List<Box> boxes;
         private LastAction lastAction;
 
@@ -29,6 +30,7 @@ namespace SokobanPC
             text = content.Load<Texture2D>("sb_texture");
             boxes = new List<Box>();
             player = new Player(text);
+            aiplayer = new AIPlayer(ref player);
             level = new Level(text, player, ref boxes);
             oldKeyboardState = Keyboard.GetState();
             lastAction = new LastAction();
@@ -38,11 +40,12 @@ namespace SokobanPC
         {
             oldPlayerPosition = player.Position;
             InputPC();
+            aiplayer.Update(gameTime);
             if (oldPlayerPosition != player.Position)
             {
                 PlayerPropablyChangedHisPosition();
             }
-            
+
             foreach (Box box in boxes)
             {
                 box.IsActive = level.getType(box.Position) == BLOCK_TYPE.Goal ? true : false;
@@ -140,6 +143,14 @@ namespace SokobanPC
             {
 
                 BackInTime();
+            }
+            else if (newKeyboardState.IsKeyDown(Keys.Q) && !oldKeyboardState.IsKeyDown(Keys.Q))
+            {
+
+                aiplayer.Run(@"dlldldRuurrddrrddllldlluRRRllUUluurrrddrrddLLLdlUr
+rrruullDurrddlLLdlluRRRuuuulllddrRlluurrrdDllUdrrr
+rddLLLdlluRRRllUUrrrrddLLLrrruullllluuRRurDlllddrr
+rrrddllldlU", new TimeSpan(0,0,0,0,500));
             }
             oldKeyboardState = newKeyboardState;
         }

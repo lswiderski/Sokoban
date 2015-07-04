@@ -38,6 +38,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AIPlayer.cs" />
     <Compile Include="Block.cs" />
     <Compile Include="Box.cs" />
     <Compile Include="Camera2D.cs" />
