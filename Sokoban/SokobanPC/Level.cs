@@ -11,35 +11,39 @@ namespace SokobanPC
     class Level
     {
         private Block[,] Map;
-        private string exampleLevel = @"  ####
-### @#
-#    #
-# .#.###
-# $    #
-##*#*# #
-# $    #
-#   ####
+        private string exampleLevel = @"#####
+#@  #
+# $.#
+# $.#
 #####";
         private Texture2D textures;
         private Player player;
-        private List<Box> boxes; 
+        private List<Box> boxes;
+        public string SolvePath { get; set; }
 
         public Level(Texture2D textures, Player _player, ref List<Box> _boxes )
         {
-            newEmptyLevel(1, 1);
+            NewEmptyLevel(1, 1);
             player = _player;
             boxes = _boxes;
-            parseLevel(exampleLevel);
+            ParseLevel(exampleLevel);
             this.textures = textures;
             
 
         }
 
-        public void newEmptyLevel(int sizeX, int sizeY)
+        public void NewEmptyLevel(int sizeX, int sizeY)
         {
             Map = new Block[sizeX, sizeY];
         }
-        public void parseLevel(string _txt)
+
+        public void LoadLevel(LevelData levelData)
+        {
+            boxes.Clear();
+            ParseLevel(levelData.Level);
+            SolvePath = levelData.SolvePath;
+        }
+        private void ParseLevel(string _txt)
         {
             int numLines = _txt.Split('\n').Length;
             int charsInRow = _txt.Length / numLines;

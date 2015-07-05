@@ -50,6 +50,8 @@ namespace SokobanPC
                         break;
                     case 'd': player.moveDown();
                         break;
+                    default:
+                        break;
                 }
                 currentPosition++;
                 if (currentPosition >= solverPath.Length)

@@ -45,6 +45,8 @@
     <Compile Include="Game1.cs" />
     <Compile Include="LastAction.cs" />
     <Compile Include="Level.cs" />
+    <Compile Include="LevelData.cs" />
+    <Compile Include="LevelList.cs" />
     <Compile Include="LevelScreen.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />

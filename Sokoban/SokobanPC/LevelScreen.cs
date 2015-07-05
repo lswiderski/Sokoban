@@ -18,7 +18,8 @@ namespace SokobanPC
         private AIPlayer aiplayer;
         private List<Box> boxes;
         private LastAction lastAction;
-
+        private LevelList levels;
+        private int currentLevel;
         private KeyboardState oldKeyboardState;
         private KeyboardState newKeyboardState;
 
@@ -31,9 +32,14 @@ namespace SokobanPC
             boxes = new List<Box>();
             player = new Player(text);
             aiplayer = new AIPlayer(ref player);
+            levels = new LevelList();
             level = new Level(text, player, ref boxes);
             oldKeyboardState = Keyboard.GetState();
             lastAction = new LastAction();
+
+            currentLevel = 1;
+            level.LoadLevel(levels.GetLEvel(currentLevel));
+            
         }
 
         public override void Update(GameTime gameTime)
@@ -147,10 +153,7 @@ namespace SokobanPC
             else if (newKeyboardState.IsKeyDown(Keys.Q) && !oldKeyboardState.IsKeyDown(Keys.Q))
             {
 
-                aiplayer.Run(@"dlldldRuurrddrrddllldlluRRRllUUluurrrddrrddLLLdlUr
-rrruullDurrddlLLdlluRRRuuuulllddrRlluurrrdDllUdrrr
-rddLLLdlluRRRllUUrrrrddLLLrrruullllluuRRurDlllddrr
-rrrddllldlU", new TimeSpan(0,0,0,0,500));
+                aiplayer.Run(level.SolvePath, new TimeSpan(0, 0, 0, 0, 100));
             }
             oldKeyboardState = newKeyboardState;
         }
