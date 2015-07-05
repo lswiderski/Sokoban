@@ -58,6 +58,11 @@ namespace SokobanPC
 
             }
 
+            if (IsLevelComplete())
+            {
+                LoadNextLevel();
+            }
+
         }
 
         private void PlayerPropablyChangedHisPosition()
@@ -164,7 +169,7 @@ namespace SokobanPC
 
         private void LoadNextLevel()
         {
-            currentLevel = currentLevel < levels.Amount() -1 ? ++currentLevel : 0;
+            currentLevel = currentLevel < levels.Amount() - 1 ? ++currentLevel : 0;
             level.LoadLevel(levels.GetLEvel(currentLevel));
         }
         private void BackInTime()
@@ -210,7 +215,12 @@ namespace SokobanPC
             level.SetEmpty(box.Position, false);
         }
 
+        private bool IsLevelComplete()
+        {
+            int activeboxes = boxes.Select(x => x).Where(x => x.IsActive).ToList().Count;
 
+            return activeboxes == boxes.Count;
+        }
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
