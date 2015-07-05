@@ -37,9 +37,9 @@ namespace SokobanPC
             oldKeyboardState = Keyboard.GetState();
             lastAction = new LastAction();
 
-            currentLevel = 1;
+            currentLevel = 0;
             level.LoadLevel(levels.GetLEvel(currentLevel));
-            
+
         }
 
         public override void Update(GameTime gameTime)
@@ -155,9 +155,18 @@ namespace SokobanPC
 
                 aiplayer.Run(level.SolvePath, new TimeSpan(0, 0, 0, 0, 100));
             }
+            else if (newKeyboardState.IsKeyDown(Keys.E) && !oldKeyboardState.IsKeyDown(Keys.E))
+            {
+                LoadNextLevel();
+            }
             oldKeyboardState = newKeyboardState;
         }
 
+        private void LoadNextLevel()
+        {
+            currentLevel = currentLevel < levels.Amount() -1 ? ++currentLevel : 0;
+            level.LoadLevel(levels.GetLEvel(currentLevel));
+        }
         private void BackInTime()
         {
             if (lastAction.IsAvailable)

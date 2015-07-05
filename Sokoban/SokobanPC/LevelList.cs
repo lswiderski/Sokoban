@@ -51,6 +51,10 @@ rrrddllldlU"));
             levels.Add(new LevelData(level, solvePath));
         }
 
+        public int Amount()
+        {
+            return levels.Count;
+        }
         public LevelData GetLEvel(int index)
         {
             if (index < levels.Count)
